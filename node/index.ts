@@ -9,28 +9,28 @@ const memoryCache = new LRUCache<string, any>({ max: 5000 })
 metrics.trackCache('status', memoryCache)
 
 const clients: ClientsConfig<Clients> = {
-  implementation: Clients,
-  options: {
-    default: {
-      retries: 2,
-      timeout: TIMEOUT_MS,
-    },
-    status: {
-      memoryCache,
-    },
-  },
+	implementation: Clients,
+	options: {
+		default: {
+			retries: 2,
+			timeout: TIMEOUT_MS,
+		},
+		status: {
+			memoryCache,
+		},
+	},
 }
 
 declare global {
-  type Context = ServiceContext<Clients>
+	type Context = ServiceContext<Clients>
 }
 
 // Export a service that defines route handlers and client options.
 export default new Service<Clients, {}>({
-  clients,
-  graphql: {
-    resolvers: {
-      Query: {},
-    },
-  },
+	clients,
+	graphql: {
+		resolvers: {
+			Query: {},
+		},
+	},
 })
